@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const exportQuotesButton = document.getElementById('exportQuotes');
     const importFileInput = document.getElementById('importFile');
     const conflictNotification = document.getElementById('conflictNotification');
+    const syncNotification = document.getElementById('syncNotification'); // Add a new element for sync notifications
 
     function populateCategories() {
         const categories = [...new Set(quotes.map(quote => quote.category))];
@@ -158,6 +159,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify(quotes)
             });
+
+            // Notify user of successful sync
+            if (syncNotification) {
+                syncNotification.textContent = 'Quotes synced with server!';
+                setTimeout(() => {
+                    syncNotification.textContent = '';
+                }, 3000); // Clear notification after 3 seconds
+            }
 
             // Fetch data from server periodically
             setInterval(fetchQuotesFromServer, 10000); // Fetch data every 10 seconds
