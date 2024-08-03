@@ -1,45 +1,49 @@
-const quoteDisplay = document.getElementById('quoteDisplay');
-const newQuoteButton = document.getElementById('newQuote');
-const addQuoteForm = document.getElementById('addQuoteForm');
-const newQuoteText = document.getElementById('newQuoteText');
-const newQuoteCategory = document.getElementById('newQuoteCategory');
-const saveQuoteButton = document.getElementById('saveQuote');
-const cancelAddButton = document.getElementById('cancelAdd');
+document.addEventListener('DOMContentLoaded', function() {
+    const quotes = [
+        { text: "The only limit to our realization of tomorrow is our doubts of today.", category: "Inspiration" },
+        { text: "Life is what happens when you're busy making other plans.", category: "Life" },
+        { text: "Don't watch the clock; do what it does. Keep going.", category: "Motivation" }
+    ];
 
-let quotes = [
-  { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-  // ... more quotes
-];
+    const quoteDisplay = document.getElementById('quoteDisplay');
+    const newQuoteButton = document.getElementById('newQuote');
+    const addQuoteButton = document.getElementById('addQuoteButton');
 
-function showRandomQuote() {
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  const randomQuote = quotes[randomIndex];
-  quoteDisplay.textContent = `${randomQuote.text} - ${randomQuote.author}`;
-}
+    function displayRandomQuote() {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const randomQuote = quotes[randomIndex];
+        quoteDisplay.innerHTML = `
+            <div class="quote">${randomQuote.text}</div>
+            <div class="category">- ${randomQuote.category}</div>
+        `;
+    }
 
-function createAddQuoteForm() {
-  addQuoteForm.style.display = 'block';
-}
+    newQuoteButton.addEventListener('click', displayRandomQuote);
 
-function cancelAddQuote() {
-  addQuoteForm.style.display = 'none';
-  newQuoteText.value = '';
-  newQuoteCategory.value = '';
-}
+    function addQuote() {
+        const newQuoteText = document.getElementById('newQuoteText').value;
+        const newQuoteCategory = document.getElementById('newQuoteCategory').value;
 
-function addQuote() {
-  const newQuote = {
-    text: newQuoteText.value,
-    category: newQuoteCategory.value
-  };
-  quotes.push(newQuote);
-  newQuoteText.value = '';
-  newQuoteCategory.value = '';
-  addQuoteForm.style.display = 'none';
-  showRandomQuote(); // Show a random quote after adding
-}
+        if (newQuoteText && newQuoteCategory) {
+            const newQuote = { text: newQuoteText, category: newQuoteCategory };
+            quotes.push(newQuote);
 
-newQuoteButton.addEventListener('click', showRandomQuote);
-addQuoteButton.addEventListener('click', createAddQuoteForm);
-saveQuoteButton.addEventListener('click', addQuote);
-cancelAddButton.addEventListener('click', cancelAddQuote);
+            // Clear the input fields
+            document.getElementById('newQuoteText').value = '';
+            document.getElementById('newQuoteCategory').value = '';
+
+            // Show the new quote
+            quoteDisplay.innerHTML = `
+                <div class="quote">${newQuote.text}</div>
+                <div class="category">- ${newQuote.category}</div>
+            `;
+        } else {
+            alert('Please enter both a quote and a category.');
+        }
+    }
+
+    addQuoteButton.addEventListener('click', addQuote);
+
+    // Display an initial quote when the page loads
+    displayRandomQuote();
+});
