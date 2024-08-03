@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showRandomQuote();
 
             // Sync with server
-            syncWithServer();
+            syncQuotes();
         } else {
             alert('Please enter both a quote and a category.');
         }
@@ -127,8 +127,9 @@ document.addEventListener('DOMContentLoaded', function() {
         fileReader.readAsText(event.target.files[0]);
     }
 
-    async function fetchQuotesFromServer() {
+    async function syncQuotes() {
         try {
+            // Fetch quotes from the server
             const response = await fetch(serverUrl);
             const serverQuotes = await response.json();
             const localQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
@@ -143,24 +144,15 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 conflictNotification.style.display = 'none';
             }
-        } catch (error) {
-            console.error('Error fetching data from server:', error);
-        }
-    }
 
-    async function syncWithServer() {
-        try {
             // POST local data to the server
             await fetch(serverUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(quotes)
+                body: JSON.stringify(localQuotes)
             });
-
-            // Fetch data from server periodically
-            setInterval(fetchQuotesFromServer, 10000); // Fetch data every 10 seconds
         } catch (error) {
             console.error('Error syncing data with server:', error);
         }
@@ -173,5 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
     populateCategories();
     showRandomQuote();
     createAddQuoteForm();
-    syncWithServer();
+
+    // Sync with server periodically
+    setInterval(syncQuotes, 10000); // Adjust the interval as needed
 });
