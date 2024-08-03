@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showRandomQuote();
 
             // Sync with server
-            syncWithServer();
+            syncQuotes();
         } else {
             alert('Please enter both a quote and a category.');
         }
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function syncWithServer() {
+    async function syncQuotes() {
         try {
             // POST local data to the server
             await fetch(serverUrl, {
@@ -173,5 +173,5 @@ document.addEventListener('DOMContentLoaded', function() {
     populateCategories();
     showRandomQuote();
     createAddQuoteForm();
-    syncWithServer();
+    syncQuotes();
 });
