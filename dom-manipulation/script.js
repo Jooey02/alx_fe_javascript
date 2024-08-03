@@ -148,9 +148,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function syncWithServer() {
-        // Fetch data from server periodically
-        setInterval(fetchQuotesFromServer, 10000); // Fetch data every 10 seconds
+    async function syncWithServer() {
+        try {
+            // POST local data to the server
+            await fetch(serverUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(quotes)
+            });
+
+            // Fetch data from server periodically
+            setInterval(fetchQuotesFromServer, 10000); // Fetch data every 10 seconds
+        } catch (error) {
+            console.error('Error syncing data with server:', error);
+        }
     }
 
     newQuoteButton.addEventListener('click', showRandomQuote);
