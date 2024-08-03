@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const quoteDisplay = document.getElementById('quoteDisplay');
     const newQuoteButton = document.getElementById('newQuote');
-    const addQuoteButton = document.getElementById('addQuoteButton');
 
-    function displayRandomQuote() {
+    function showRandomQuote() {
         const randomIndex = Math.floor(Math.random() * quotes.length);
         const randomQuote = quotes[randomIndex];
         quoteDisplay.innerHTML = `
@@ -18,9 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    newQuoteButton.addEventListener('click', displayRandomQuote);
+    newQuoteButton.addEventListener('click', showRandomQuote);
 
-    function addQuote() {
+    window.addQuote = function() {
         const newQuoteText = document.getElementById('newQuoteText').value;
         const newQuoteCategory = document.getElementById('newQuoteCategory').value;
 
@@ -42,8 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    addQuoteButton.addEventListener('click', addQuote);
-
     // Display an initial quote when the page loads
-    displayRandomQuote();
+    showRandomQuote();
 });
