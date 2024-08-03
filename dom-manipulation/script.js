@@ -19,15 +19,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createAddQuoteForm() {
-        const formHTML = `
-            <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-            <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-            <button id="addQuoteButton">Add Quote</button>
-        `;
-        addQuoteFormContainer.innerHTML = formHTML;
+        const newQuoteTextInput = document.createElement('input');
+        newQuoteTextInput.id = 'newQuoteText';
+        newQuoteTextInput.type = 'text';
+        newQuoteTextInput.placeholder = 'Enter a new quote';
 
-        const addQuoteButton = document.getElementById('addQuoteButton');
+        const newQuoteCategoryInput = document.createElement('input');
+        newQuoteCategoryInput.id = 'newQuoteCategory';
+        newQuoteCategoryInput.type = 'text';
+        newQuoteCategoryInput.placeholder = 'Enter quote category';
+
+        const addQuoteButton = document.createElement('button');
+        addQuoteButton.textContent = 'Add Quote';
         addQuoteButton.addEventListener('click', addQuote);
+
+        addQuoteFormContainer.appendChild(newQuoteTextInput);
+        addQuoteFormContainer.appendChild(newQuoteCategoryInput);
+        addQuoteFormContainer.appendChild(addQuoteButton);
     }
 
     function addQuote() {
