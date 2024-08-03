@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Quote Generator</title>
     <style>
-        body {
+            body {
             font-family: Arial, sans-serif;
             padding: 20px;
             background-color: #f0f0f0;
@@ -49,6 +49,8 @@
     <div id="quoteDisplay"></div>
     <button id="newQuote">Show New Quote</button>
     <div id="addQuoteFormContainer"></div>
+    <button id="exportQuotes">Export Quotes to JSON</button>
+    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
     <script src="script.js"></script>
 </body>
 </html>
